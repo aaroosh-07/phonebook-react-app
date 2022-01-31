@@ -23,11 +23,26 @@ const Form = ({ persons, setPersons }) => {
             noteObject.create(t).then((response) => {
                 setPersons(persons.concat(response.data));
             });
-            setNewName("");
-            setNewNum(" ");
         } else {
-            alert(`${newName} already exist in phonebook`);
+            if (
+                window.confirm(
+                    `${newName} already exist in phonebook. Do you want to update it?`
+                )
+            ) {
+                const changedPerson = { ...found, num: newNum };
+                noteObject.update(found.id, changedPerson).then(() => {
+                    setPersons(
+                        persons.map((person) => {
+                            return person.id !== found.id
+                                ? person
+                                : changedPerson;
+                        })
+                    );
+                });
+            }
         }
+        setNewName("");
+        setNewNum("");
     };
 
     return (
