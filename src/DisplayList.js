@@ -1,12 +1,13 @@
 import noteObject from "./services/persons";
 import React from "react";
 
-const Record = ({ person, toggleImportance }) => {
+const Record = ({ person, toggleImportance, deleteRecord }) => {
     const label = person.important ? "important" : "not important";
     return (
         <p>
             {person.name} {person.num}
             <button onClick={toggleImportance}>{label}</button>
+            <button onClick={deleteRecord}>delete</button>
         </p>
     );
 };
@@ -23,12 +24,20 @@ const DisplayList = ({ persons, setPersons }) => {
             );
         });
     };
+    const deleteRecordOf = (id) => {
+        noteObject.deleteRecord(id).then((response) => {
+            console.log(response);
+            const updatedList = persons.filter((person) => person.id !== id);
+            setPersons(updatedList);
+        });
+    };
     return (
         <div>
             {persons.map((person) => (
                 <Record
                     person={person}
                     toggleImportance={() => toggleimportanceof(person.id)}
+                    deleteRecord={() => deleteRecordOf(person.id)}
                     key={person.id}
                 />
             ))}

@@ -24,6 +24,7 @@ const Form = ({ persons, setPersons }) => {
                 setPersons(persons.concat(response.data));
             });
             setNewName("");
+            setNewNum(" ");
         } else {
             alert(`${newName} already exist in phonebook`);
         }
