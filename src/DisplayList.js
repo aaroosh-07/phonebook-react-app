@@ -25,11 +25,14 @@ const DisplayList = ({ persons, setPersons }) => {
         });
     };
     const deleteRecordOf = (id) => {
-        noteObject.deleteRecord(id).then((response) => {
-            console.log(response);
-            const updatedList = persons.filter((person) => person.id !== id);
-            setPersons(updatedList);
-        });
+        if (window.confirm("do want to delete this record?")) {
+            noteObject.deleteRecord(id).then((response) => {
+                const updatedList = persons.filter(
+                    (person) => person.id !== id
+                );
+                setPersons(updatedList);
+            });
+        }
     };
     return (
         <div>
