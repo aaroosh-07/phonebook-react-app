@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import noteObject from "./services/persons";
 
-const Form = ({ persons, setPersons }) => {
+const Form = ({ persons, setPersons, setmessage }) => {
     const [newName, setNewName] = useState("");
     const [newNum, setNewNum] = useState("");
 
@@ -22,6 +22,7 @@ const Form = ({ persons, setPersons }) => {
         if (!found) {
             noteObject.create(t).then((response) => {
                 setPersons(persons.concat(response.data));
+                setmessage(`${response.data.name} added to phonebook`);
             });
         } else {
             if (

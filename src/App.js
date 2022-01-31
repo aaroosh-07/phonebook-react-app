@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import noteObject from "./services/persons.js";
 import Form from "./Form";
 import DisplayList from "./DisplayList";
+import Notification from "./Notification";
 
 const App = () => {
     const [persons, setPersons] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [message, setmessage] = useState(null);
 
     useEffect(() => {
         noteObject.getAll().then((response) => {
@@ -17,8 +19,13 @@ const App = () => {
 
     return (
         <div>
+            <Notification message={message} setMessage={setmessage} />
             <h2>Phonebook</h2>
-            <Form persons={persons} setPersons={setPersons} />
+            <Form
+                persons={persons}
+                setPersons={setPersons}
+                setmessage={setmessage}
+            />
             <h2>Numbers</h2>
             {isLoading && <p>loading......</p>}
             {persons && (
